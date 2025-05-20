@@ -38,7 +38,7 @@ rm file.txt  # Hapus file asli setelah dienkripsi
 
 ### Dekripsi
 ```bash
-gpg -d file.txt.gpg -o out
+gpg -d -o out file.txt.gpg
 ```
 
 ---

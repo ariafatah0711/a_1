@@ -1,5 +1,4 @@
 # GPG CLI Cheat Sheet
-
 ## Instalasi
 ```bash
 sudo apt install gnupg

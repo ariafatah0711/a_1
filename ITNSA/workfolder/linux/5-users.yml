@@ -19,12 +19,13 @@
       register: csv_content
 
     - name: Decode and parse CSV to user list
+      # Skip header, drop last empty
       set_fact:
         users: >-
           {{
             csv_content.content
             | b64decode
-            | split('\n')[1:-1]  # Skip header, drop last empty
+            | split('\n')[1:-1]
             | map('split', ';')
             | map('community.general.dict', ['uid', 'username', 'password', 'home'])
             | list

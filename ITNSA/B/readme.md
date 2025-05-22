@@ -2,6 +2,7 @@
 ## soal
 - [soal.pdf](./LKS_PROVINSI_2024_ITNSA_MB_actual_en.pdf)
 - [users.csv_sample](./workfolder/users.csv)
+- [workfolder_sample](./workfolder/)
 
 ## topologi
 ![alt text](images/readme/image.png)
@@ -156,6 +157,8 @@ ansible-playbook /home/user/workfolder/linux/4-web-server.yml -i /home/user/work
 ansible-playbook /home/user/workfolder/linux/5-users.yml -i /home/user/workfolder/hosts
 
 # WIN
+# ansible-galaxy collection install community.windows # need for windows module
+
 ansible-playbook /home/user/workfolder/windows/1-hostname.yml -i /home/user/workfolder/hosts
 ansible-playbook /home/user/workfolder/windows/2-sec-log.yml -i /home/user/workfolder/hosts
 ansible-playbook /home/user/workfolder/windows/3-dns-client.yml -i /home/user/workfolder/hosts

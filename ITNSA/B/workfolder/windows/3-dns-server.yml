@@ -1,4 +1,4 @@
-- name: Configure DNS Server
+- name: Configure DNS Server manually
   hosts: 10.0.10.20
   tasks:
     - name: Install DNS Server Feature
@@ -7,28 +7,49 @@
         state: present
         include_management_tools: true
 
-    - name: Create primary zone
-      win_dns_zone:
-        name: windows.com
-        zone_type: Primary
+    - name: Create DNS primary zone
+      win_shell: Add-DnsServerPrimaryZone -Name "windows.com" -ZoneFile "windows.com.dns"
 
-    - name: Add A record for windows.com
-      win_dns_record:
-        zone: windows.com
-        name: "@"
-        type: A
-        value: 10.0.10.20
+    - name: Add A record (@)
+      win_shell: Add-DnsServerResourceRecordA -Name "@" -ZoneName "windows.com" -IPv4Address "10.0.10.20"
 
-    - name: Add A record for hostname.windows.com
-      win_dns_record:
-        zone: windows.com
-        name: "{{ hostname }}"
-        type: A
-        value: 10.0.10.20
+    - name: Add A record (hostname)
+      win_shell: Add-DnsServerResourceRecordA -Name "{{ hostname }}" -ZoneName "windows.com" -IPv4Address "10.0.10.20"
 
-    - name: Add A record for www.windows.com
-      win_dns_record:
-        zone: windows.com
-        name: www
-        type: A
-        value: 10.0.10.20
+    - name: Add A record (www)
+      win_shell: Add-DnsServerResourceRecordA -Name "www" -ZoneName "windows.com" -IPv4Address "10.0.10.20"
+
+# - name: Configure DNS Server
+#   hosts: 10.0.10.20
+#   tasks:
+#     - name: Install DNS Server Feature
+#       win_feature:
+#         name: DNS
+#         state: present
+#         include_management_tools: true
+
+#     - name: Create primary zone
+#       win_dns_zone:
+#         name: windows.com
+#         zone_type: Primary
+
+#     - name: Add A record for windows.com
+#       win_dns_record:
+#         zone: windows.com
+#         name: "@"
+#         type: A
+#         value: 10.0.10.20
+
+#     - name: Add A record for hostname.windows.com
+#       win_dns_record:
+#         zone: windows.com
+#         name: "{{ hostname }}"
+#         type: A
+#         value: 10.0.10.20
+
+#     - name: Add A record for www.windows.com
+#       win_dns_record:
+#         zone: windows.com
+#         name: www
+#         type: A
+#         value: 10.0.10.20

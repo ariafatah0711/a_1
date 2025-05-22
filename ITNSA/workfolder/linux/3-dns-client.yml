@@ -1,1 +1,22 @@
-#
+- name: Configure DNS Clients
+  hosts: linux
+  become: yes
+  vars:
+    dns_servers: "{{ groups['dns'] }}"  # ambil IP dari group [dns]
+
+  tasks:
+    - name: Backup original resolv.conf
+      copy:
+        src: /etc/resolv.conf
+        dest: /etc/resolv.conf.bak
+        remote_src: yes
+        force: yes
+
+    - name: Set DNS nameservers based on DNS group
+      copy:
+        dest: /etc/resolv.conf
+        content: |
+          # Managed by Ansible
+          {% for dns_ip in dns_servers %}
+                    nameserver {{ dns_ip }}
+          {% endfor %}

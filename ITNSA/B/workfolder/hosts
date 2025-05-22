@@ -6,10 +6,6 @@
 10.0.10.11 webport=80 webcolor=blue
 10.0.10.12 webport=80 webcolor=green
 
-; [dns]
-; 10.0.10.11
-; 10.0.10.12
-
 [windows]
 10.0.10.20 hostname=win webport=80 webcolor=purple
 
@@ -19,12 +15,14 @@ ansible_ssh_pass=P@ssw0rd
 ansible_ssh_common_args='-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
 
 [windows:vars]
-ansible_user=Administrator
+ansible_user=administrator
 ansible_password=P@ssw0rd
 ansible_connection=ssh
 ansible_shell_type=powershell
 remote_tmp = C:\Temp\ansible_tmp
 ; ansible_ssh_common_args='-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
+
+#######################################################################################
 
 ; [windows:vars]
 ; ansible_user=Administrator

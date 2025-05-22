@@ -6,6 +6,6 @@
         name: "{{ hostname }}"
       register: result
 
-    - name: Reboot if hostname changed
-      win_reboot:
-      when: result.reboot_required
+    # - name: Reboot if hostname changed
+    #   win_reboot:
+    #   when: result.reboot_required

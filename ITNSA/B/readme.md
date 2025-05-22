@@ -83,10 +83,20 @@ ansible -v
   # (Opsional) Cek status service
   Get-Service sshd
   ```
-- # Tambahkan rule firewall agar bisa akses dari luar
+- Tambahkan rule firewall agar bisa akses dari luar
   ```bash
   # versi singkat
   New-NetFirewallRule -Name sshd -Protocol TCP -LocalPort 22 -Action Allow
+  ```
+- mengubah shell default menjadi powershell
+  ```bash
+  Set-ItemProperty -Path "HKLM:\SOFTWARE\OpenSSH" -Name DefaultShell -Value "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" -Force
+
+  ## atau
+  notepad "C:\ProgramData\ssh\sshd_config"
+
+  # tambahkan ini
+  DefaultShell C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
   ```
 
 ## Ansible – Automation via SSH
@@ -181,5 +191,8 @@ ls /home
 
 ## test configurasi WIN (opsional)
 ```bash
-comming soon
+# 1-hostname.yml
+hostname # sebelum mengecek ini coba reboot dulu karena hostname akan berubah setelah reboot
+
+# 3-web-server.yml
 ```

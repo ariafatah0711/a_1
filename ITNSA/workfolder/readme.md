@@ -18,7 +18,7 @@ nano /etc/ssh/sshd_config
 systemctl enable --now ssh
 ```
 
-# ansible
+# linux-bastion ( ansible )
 ```bash
 # setup repo
 nano /etc/apt/sources.lists

@@ -1,5 +1,7 @@
 - name: Configure DNS Server manually
   hosts: 10.0.10.20
+  vars:
+    ip_dns: "10.0.10.20"  # win
   tasks:
     - name: Install DNS Server Feature
       win_feature:
@@ -11,13 +13,13 @@
       win_shell: Add-DnsServerPrimaryZone -Name "windows.com" -ZoneFile "windows.com.dns"
 
     - name: Add A record (@)
-      win_shell: Add-DnsServerResourceRecordA -Name "@" -ZoneName "windows.com" -IPv4Address "10.0.10.20"
+      win_shell: Add-DnsServerResourceRecordA -Name "@" -ZoneName "windows.com" -IPv4Address "{{ ip_dns }}"
 
     - name: Add A record (hostname)
-      win_shell: Add-DnsServerResourceRecordA -Name "{{ hostname }}" -ZoneName "windows.com" -IPv4Address "10.0.10.20"
+      win_shell: Add-DnsServerResourceRecordA -Name "{{ hostname }}" -ZoneName "windows.com" -IPv4Address "{{ iip_dns }}"
 
     - name: Add A record (www)
-      win_shell: Add-DnsServerResourceRecordA -Name "www" -ZoneName "windows.com" -IPv4Address "10.0.10.20"
+      win_shell: Add-DnsServerResourceRecordA -Name "www" -ZoneName "windows.com" -IPv4Address "{{ ip_dns }}"
 
 # - name: Configure DNS Server
 #   hosts: 10.0.10.20

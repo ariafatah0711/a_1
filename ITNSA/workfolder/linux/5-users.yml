@@ -8,7 +8,7 @@
 
   tasks:
     - name: Copy CSV file to remote host
-      ansible.builtin.copy:
+      copy:
         src: "{{ csv_source }}"
         dest: "{{ csv_dest }}"
         mode: '0644'
@@ -20,7 +20,7 @@
       register: users_csv
 
     - name: Ensure users exist without changing password if already present
-      ansible.builtin.user:
+      user:
         name: "{{ item.username }}"
         uid: "{{ item.uid | int }}"
         password: "{{ item.password | password_hash('sha512') }}"

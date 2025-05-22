@@ -1,7 +1,7 @@
 # nama_soal
 ## soal
-[soal.pdf](./LKS_PROVINSI_2024_ITNSA_MB_actual_en.pdf)
-[users.csv_sample](./workfolder/users.csv)
+- [soal.pdf](./LKS_PROVINSI_2024_ITNSA_MB_actual_en.pdf)
+- [users.csv_sample](./workfolder/users.csv)
 
 ## topologi
 ![alt text](images/readme/image.png)
@@ -121,7 +121,6 @@ ansible-playbook /home/user/workfolder/windows/2-sec-log.yml -i /home/user/workf
 ansible-playbook /home/user/workfolder/windows/3-dns-client.yml -i /home/user/workfolder/hosts
 ansible-playbook /home/user/workfolder/windows/3-dns-server.yml -i /home/user/workfolder/hosts
 ansible-playbook /home/user/workfolder/windows/4-web-server.yml -i /home/user/workfolder/hosts
-
 ```
 > Pastikan struktur direktori dan nama file sesuai.
 

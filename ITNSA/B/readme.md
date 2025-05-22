@@ -43,18 +43,18 @@ ansible -v
     ```
   > Default-nya, root login dilarang (atau hanya boleh dengan public key). 
   Mengubah ke PermitRootLogin yes memperbolehkan login sebagai root via password (pastikan root punya password).
-- mengaktifkan OpenSSH Server
+<!-- - mengaktifkan OpenSSH Server
   ```bash
   sudo systemctl enable --now ssh
   ```
-  > --now digunakan untuk melakukan enable sekaligus start
+  > --now digunakan untuk melakukan enable sekaligus start -->
 - melakukan restart OpenSSH Server jika ingin mengubah konfigurasi
   ```bash
   sudo systemctl restart ssh
   ```
 
 ### setup openssh server pada WIN
-- lorem
+- steps 1
   ```bash
   comming soon
   ```
@@ -74,7 +74,19 @@ ansible -v
   ```bash
   cd /home/user/workfolder
   nano hosts
-  ## dan sesuaikan
+  ## dan sesuaikan ip nya
+
+  nano linux/2-dns-server.yml
+  ## ubah dan sesuaikan
+  dns_servers:
+    - "10.0.10.11"
+    - "10.0.10.12"
+  
+  nano linux/3-dns-client.yml
+  ## ubah dan sesuaikan
+  dns_servers:
+    - "10.0.10.11"
+    - "10.0.10.12"
   ```
 
 ### Test koneksi SSH dengan Ansible
@@ -108,6 +120,35 @@ ansible-playbook /home/user/workfolder/windows/4-web-server.yml -i /home/user/wo
 ```
 > Pastikan struktur direktori dan nama file sesuai.
 
+## test configurasi LIN1, LIN2 (opsional)
+```bash
+# 1-hostname.yml
+hostname # melihat apakah konfigurasi hostname sudah berhasil
+
+# 2-dns-server.yml
+systemctl status named # melihat service dns sudah berjalan
+cat /etc/bind/zones/db.linux.com # melihat zone db linux.com
+
+# 3-dns-client.yml
+cat /etc/resolv.conf
+nslookup linux.com
+nslookup lin1.linux.com
+nslookup lin2.linux.com
+
+# 4-web-server.yml
+apt install curl
+curl lin1.linux.com # or use ip use the 10.1.10.11
+curl lin2.linux.com # or use ip use the 10.1.10.12
+
+# 5-users.yml
+cat /etc/passwd
+ls /home
+```
+
+## test configurasi WIN (opsional)
+```bash
+comming soon
+```
 
 <!-- 
 ## linux-bastion ( ansible )

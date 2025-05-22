@@ -1,4 +1,8 @@
 # nama_soal
+## soal
+[soal.pdf](./LKS_PROVINSI_2024_ITNSA_MB_actual_en.pdf)
+[users.csv_sample](./workfolder/users.csv)
+
 ## topologi
 ![alt text](images/readme/image.png)
 
@@ -37,12 +41,12 @@ ansible -v
     ```bash
     #PermitRootLogin prohibit-password
     ```
-  - Ubah menjadi:
+  - Ubah menjadi (jangan lupa hapus # di awal baris untuk mengaktifkan konfigurasi):
     ```bash
     PermitRootLogin yes
     ```
-  > Default-nya, root login dilarang (atau hanya boleh dengan public key). 
-  Mengubah ke PermitRootLogin yes memperbolehkan login sebagai root via password (pastikan root punya password).
+  - Default-nya, root login dilarang (atau hanya boleh dengan public key). 
+    > Mengubah ke PermitRootLogin yes memperbolehkan login sebagai root via password (pastikan root punya password).
 <!-- - mengaktifkan OpenSSH Server
   ```bash
   sudo systemctl enable --now ssh
@@ -70,7 +74,7 @@ ansible -v
   cp -rf ITNSA/B/workfolder /home/user
   ```
 - jika user / directory /home/user tidak ditemukan buat terlebih dahulu dengan menggunakan ```useradd user```, dan ```passwd user``` untuk mengubah password user (opsional)
-- setelah melakukan clone masuk ke directory dengan perintah ```/home/user/workfolder```, dan jangan lupa ubah hosts menjadi ip yang sesuai dengan server yang ingin di konfig nantinya
+- setelah melakukan clone masuk ke directory ```/home/user/workfolder```, dan jangan lupa ubah hosts menjadi ip yang sesuai dengan server yang ingin di konfig nantinya
   ```bash
   cd /home/user/workfolder
   nano hosts
@@ -98,6 +102,7 @@ ansible all -i /home/user/workfolder/hosts -m ping
 ```
 Penjelasan:
 - **linux** → nama group host yang didefinisikan di file hosts.
+- **all** → untuk semua host yang didefinisikan di file hosts.
 - **-i** → menunjukkan path ke file inventory hosts.
 - **-m ping** → menjalankan module ping Ansible (bukan ICMP, tapi tes koneksi & autentikasi via SSH).
 
@@ -149,47 +154,3 @@ ls /home
 ```bash
 comming soon
 ```
-
-<!-- 
-## linux-bastion ( ansible )
-```bash
-## install ansible
-apt install pipx ansible sshpass curl
-git clone https://github.com/ariafatah0711/a_1
-cd a_1
-
-# test connection with ansible
-ansible linux -i IT_NSA/workfolder/hosts -m ping
-
-# use workfolder
-ansible-playbook ITNSA/workfolder/linux/1-hostname.yml -i IT_NSA/workfolder/hosts
-ansible-playbook ITNSA/workfolder/linux/2-dns-server.yml -i IT_NSA/workfolder/hosts
-ansible-playbook ITNSA/workfolder/linux/3-dns-client.yml -i IT_NSA/workfolder/hosts
-ansible-playbook ITNSA/workfolder/linux/4-web-server.yml -i IT_NSA/workfolder/hosts
-ansible-playbook ITNSA/workfolder/linux/5-users.yml -i IT_NSA/workfolder/hosts
-```
-
-## linux debian
-```bash
-# setup repo
-nano /etc/apt/sources.lists
-###
-deb https://ftp.debian.org/debian/ bookworm contrib main non-free non-free-firmware
-deb https://ftp.debian.org/debian/ bookworm-updates contrib main non-free non-free-firmware
-deb https://security.debian.org/debian-security/ bookworm-security contrib main non-free non-free-firmware
-###
-
-# setup sshd
-apt install openssh-server curl net-tools
-nano /etc/ssh/sshd_config
-##
-# ubah bagian permitrootlogin menjadi yes
-##
-
-systemctl enable --now ssh
-```
-
-## windows server
-```bash
-# none
-``` -->

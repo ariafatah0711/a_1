@@ -5,7 +5,7 @@ nano /etc/apt/sources.lists
 ###
 deb https://ftp.debian.org/debian/ bookworm contrib main non-free non-free-firmware
 deb https://ftp.debian.org/debian/ bookworm-updates contrib main non-free non-free-firmware
-deb https://security. debian. org/debian-security/ bookworm-security contrib main non-free non-free-firmware
+deb https://security.debian.org/debian-security/ bookworm-security contrib main non-free non-free-firmware
 ###
 
 # setup sshd
@@ -25,7 +25,7 @@ nano /etc/apt/sources.lists
 ###
 deb https://ftp.debian.org/debian/ bookworm contrib main non-free non-free-firmware
 deb https://ftp.debian.org/debian/ bookworm-updates contrib main non-free non-free-firmware
-deb https://security. debian. org/debian-security/ bookworm-security contrib main non-free non-free-firmware
+deb https://security.debian.org/debian-security/ bookworm-security contrib main non-free non-free-firmware
 ###
 
 ## install ansible

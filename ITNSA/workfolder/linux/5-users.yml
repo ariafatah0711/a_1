@@ -3,23 +3,34 @@
   hosts: linux
   become: yes
   vars:
-    csv_source: /home/user/workfolder/users.csv
-    csv_dest: /tmp/users.csv
+    csv_bastion: /home/user/workfolder/users.csv
+    csv_file: /tmp/users.csv
 
   tasks:
     - name: Copy CSV file to remote host
       copy:
-        src: "{{ csv_source }}"
-        dest: "{{ csv_dest }}"
+        src: "{{ csv_bastion }}"
+        dest: "{{ csv_file }}"
         mode: '0644'
 
-    - name: Read users from CSV on remote host
-      community.general.read_csv:
-        path: "{{ csv_dest }}"
-        delimiter: ";"
-      register: users_csv
+    - name: Read user CSV file
+      slurp:
+        src: "{{ csv_file }}"
+      register: csv_content
 
-    - name: Ensure users exist without changing password if already present
+    - name: Decode and parse CSV to user list
+      set_fact:
+        users: >-
+          {{
+            csv_content.content
+            | b64decode
+            | split('\n')[1:-1]  # Skip header, drop last empty
+            | map('split', ';')
+            | map('community.general.dict', ['uid', 'username', 'password', 'home'])
+            | list
+          }}
+
+    - name: Ensure users exist
       user:
         name: "{{ item.username }}"
         uid: "{{ item.uid | int }}"
@@ -29,9 +40,7 @@
         state: present
         create_home: yes
         update_password: on_create
-      loop: "{{ users_csv.list }}"
-      loop_control:
-        label: "{{ item.username }}"
+      loop: "{{ users }}"
 
 # - name: Import users from CSV
 #   hosts: linux

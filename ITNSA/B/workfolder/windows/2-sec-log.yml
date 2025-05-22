@@ -1,0 +1,8 @@
+- name: Disable Remote Desktop
+  hosts: windows
+  tasks:
+    - name: Stop Remote Desktop Service
+      win_service:
+        name: TermService
+        state: stopped
+        start_mode: disabled

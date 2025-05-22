@@ -1,0 +1,13 @@
+- name: Install IIS Web Server and set default page
+  hosts: windows
+  tasks:
+    - name: Install IIS Feature
+      win_feature:
+        name: Web-Server
+        state: present
+        include_management_tools: true
+
+    - name: Set homepage for www.windows.com
+      win_shell: |
+        $html = "Hello from {{ hostname }} !"
+        Set-Content -Path "C:\inetpub\wwwroot\index.html" -Value $html -Force

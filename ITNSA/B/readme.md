@@ -1,4 +1,4 @@
-# nama_soal
+# MODUL B INFRASTRUCTURE PROGRAMMABLE & AUTOMATION
 ## soal
 - [soal.pdf](./LKS_PROVINSI_2024_ITNSA_MB_actual_en.pdf)
 - [users.csv_sample](./workfolder/users.csv)
@@ -58,9 +58,35 @@ ansible -v
   ```
 
 ### setup openssh server pada WIN
-- steps 1
+- installasi windows
+  - install windows di proxmox jan lupa untuk gunakan display **VMware compatible** karena kadang tidak muncul
+- tambahkan user
   ```bash
-  comming soon
+  net user user P@ssw0rd /add
+  net localgroup administrators user /add # add user to group administrator (make this user to privilages admin)
+
+  # test login
+  runas /user:user powershell
+  ```
+- Instalasi OpenSSH Server
+  ```bash
+  # Masuk ke PowerShell dari cmd
+  powershell
+
+  # Install fitur OpenSSH Server
+  Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
+
+  # Mulai dan aktifkan service agar otomatis jalan saat boot
+  Start-Service sshd
+  Set-Service -Name sshd -StartupType 'Automatic'
+
+  # (Opsional) Cek status service
+  Get-Service sshd
+  ```
+- # Tambahkan rule firewall agar bisa akses dari luar
+  ```bash
+  # versi singkat
+  New-NetFirewallRule -Name sshd -Protocol TCP -LocalPort 22 -Action Allow
   ```
 
 ## Ansible – Automation via SSH

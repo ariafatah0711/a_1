@@ -1,0 +1,34 @@
+- name: Configure DNS Server
+  hosts: 10.0.10.20
+  tasks:
+    - name: Install DNS Server Feature
+      win_feature:
+        name: DNS
+        state: present
+        include_management_tools: true
+
+    - name: Create primary zone
+      win_dns_zone:
+        name: windows.com
+        zone_type: Primary
+
+    - name: Add A record for windows.com
+      win_dns_record:
+        zone: windows.com
+        name: "@"
+        type: A
+        value: 10.0.10.20
+
+    - name: Add A record for hostname.windows.com
+      win_dns_record:
+        zone: windows.com
+        name: "{{ hostname }}"
+        type: A
+        value: 10.0.10.20
+
+    - name: Add A record for www.windows.com
+      win_dns_record:
+        zone: windows.com
+        name: www
+        type: A
+        value: 10.0.10.20

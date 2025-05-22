@@ -20,8 +20,15 @@ ansible_ssh_common_args='-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/
 
 [windows:vars]
 ansible_user=Administrator
-ansible_password=P@ssw0rd
-ansible_connection=winrm
-ansible_winrm_transport=basic
-ansible_port=5985
-ansible_winrm_server_cert_validation=ignore
+ansible_ssh_pass=P@ssw0rd
+ansible_connection=ssh
+ansible_shell_type=powershell
+ansible_ssh_common_args='-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
+
+; [windows:vars]
+; ansible_user=Administrator
+; ansible_password=P@ssw0rd
+; ansible_connection=winrm
+; ansible_winrm_transport=basic
+; ansible_port=5985
+; ansible_winrm_server_cert_validation=ignore

@@ -2,9 +2,15 @@
   hosts: linux
   become: yes
   vars:
-    csv_file: /home/user/workfolder/users.csv
+    csv_bastion: /home/user/workfolder/users.csv
+    csv_file: /tmp/users.csv
 
   tasks:
+    - name: Copy CSV file to remote host
+      copy:
+        src: "{{ csv_bastion }}"
+        dest: "{{ csv_file }}"
+
     - name: Read user CSV file
       slurp:
         src: "{{ csv_file }}"

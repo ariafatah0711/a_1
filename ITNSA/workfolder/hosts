@@ -1,11 +1,10 @@
-[lin]
-lin1 ansible_host=lin1 hostname=lin1
-lin2 ansible_host=lin2 hostname=lin2
-; lin[0:1]
+[linux]
+10.1.10.11 hostname=lin1 webport=80 webcolor=blue
+10.1.10.12 hostname=lin2 webport=80 webcolor=green
 
-[lin:vars]
-ansible_user=root
-ansible_ssh_private_key_file=/ssh_node/private.key
-ansible_ssh_common_args='-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
+[web]
+10.1.10.11
+10.1.10.12
 
-; win
+[dns]
+10.1.10.20

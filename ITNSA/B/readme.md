@@ -79,10 +79,13 @@ ansible -v
 
 ### Test koneksi SSH dengan Ansible
 ```bash
+ansible linux -i /home/user/workfolder/hosts -m ping
+
+# atau jika ingin menggunakan semua ip di inventory
 ansible all -i /home/user/workfolder/hosts -m ping
 ```
 Penjelasan:
-- **all** → nama group host yang didefinisikan di file hosts. (jika menggunakan all akan melakukan ke semua host)
+- **linux** → nama group host yang didefinisikan di file hosts.
 - **-i** → menunjukkan path ke file inventory hosts.
 - **-m ping** → menjalankan module ping Ansible (bukan ICMP, tapi tes koneksi & autentikasi via SSH).
 
@@ -105,7 +108,7 @@ ansible-playbook /home/user/workfolder/windows/4-web-server.yml -i /home/user/wo
 ```
 > Pastikan struktur direktori dan nama file sesuai.
 
----
+
 <!-- 
 ## linux-bastion ( ansible )
 ```bash

@@ -3,8 +3,12 @@
 10.1.10.245 hostname=lin2 webport=80 webcolor=green
 
 [web]
-10.1.10.247 hostname=lin1 webport=80 webcolor=blue
-10.1.10.245 hostname=lin2 webport=80 webcolor=green
+10.1.10.247
+10.1.10.245
 
 [dns]
 10.1.10.20
+
+[linux:vars]
+ansible_user=root
+ansible_ssh_pass=P@ssw0rd

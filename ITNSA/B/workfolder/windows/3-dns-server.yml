@@ -1,49 +1,49 @@
-- name: Configure DNS Server manually
+- name: Configure DNS Server on Windows
   hosts: windows
   vars:
-    ip_dns: "10.0.10.20"
-    hostname: "win"
+    ip_dns: "10.0.10.20"        # IP DNS server (yang akan direkam di A record)
+    hostname: "win"             # Nama host DNS (hostname server)
   tasks:
-    - name: Install DNS Server Feature
-      win_feature:
+    - name: Ensure DNS feature is installed
+      community.windows.win_feature:
         name: DNS
         state: present
         include_management_tools: true
 
     - name: Ensure DNS service is running
-      win_service:
+      community.windows.win_service:
         name: DNS
         state: started
         start_mode: auto
 
-    - name: Create DNS primary zone if not exists
-      win_dns_zone:
+    - name: Ensure primary DNS zone exists
+      community.windows.win_dns_zone:
         name: windows.com
         type: primary
         state: present
 
-    - name: Add A record (@)
-      win_dns_record:
-        zone: windows.com
+    - name: Add A record for @
+      community.windows.win_dns_record:
         name: "@"
         type: A
         value: "{{ ip_dns }}"
+        zone: "windows.com"
         state: present
 
-    - name: Add A record (hostname)
-      win_dns_record:
-        zone: windows.com
+    - name: Add A record for hostname
+      community.windows.win_dns_record:
         name: "{{ hostname }}"
         type: A
         value: "{{ ip_dns }}"
+        zone: "windows.com"
         state: present
 
-    - name: Add A record (www)
-      win_dns_record:
-        zone: windows.com
+    - name: Add A record for www
+      community.windows.win_dns_record:
         name: "www"
         type: A
         value: "{{ ip_dns }}"
+        zone: "windows.com"
         state: present
 
 ##########

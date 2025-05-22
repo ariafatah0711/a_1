@@ -1,0 +1,16 @@
+[linux]
+10.1.10.243 hostname=lin1 webport=80 webcolor=blue
+10.1.10.244 hostname=lin2 webport=80 webcolor=green
+
+[web]
+10.1.10.243 hostname=lin1 webport=80 webcolor=blue
+10.1.10.244 hostname=lin2 webport=80 webcolor=green
+
+[dns]
+10.1.10.243 hostname=lin1 webport=80 webcolor=blue
+10.1.10.244 hostname=lin2 webport=80 webcolor=green
+
+[linux:vars]
+ansible_user=root
+ansible_ssh_pass=P@ssw0rd
+ansible_ssh_common_args='-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'

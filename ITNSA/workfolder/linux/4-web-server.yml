@@ -14,7 +14,7 @@
     - name: Create website index.html
       copy:
         content: "{{ site_template }}"
-        dest: "/usr/share/nginx/html/index.html"
+        dest: "/var/www/html/index.html"
 
     - name: Ensure nginx is listening on custom port
       lineinfile:

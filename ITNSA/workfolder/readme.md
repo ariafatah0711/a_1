@@ -3,7 +3,7 @@
 # setup repo
 
 # setup sshd
-apt install openssh-server
+apt install openssh-server curl net-tools
 nano /etc/ssh/sshd_config
 ##
 # ubah bagian permitrootlogin menjadi yes
@@ -17,7 +17,7 @@ systemctl enable --now ssh
 # setup repo
 
 ## install ansible
-apt install pipx ansible sshpass
+apt install pipx ansible sshpass curl
 git clone https://github.com/ariafatah0711/a_1
 cd a_1
 

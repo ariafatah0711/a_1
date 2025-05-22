@@ -18,27 +18,26 @@
 
     - name: Parse CSV content with ';' delimiter
       set_fact:
+        users_raw: "{{ csv_content['content'] | b64decode | splitlines()[1:] }}"
+
+    - name: Convert raw CSV lines into structured dict
+      set_fact:
         users_parsed: >-
           {{
-            csv_content['content'] | b64decode | splitlines()[1:] |
+            users_raw |
             map('split', ';') |
             map('zip', ['uid', 'username', 'password', 'home']) |
-            map('community.general.dict') | list
+            map('community.general.dict') |
+            list
           }}
 
     - name: Generate password hashes
       set_fact:
-        users_hashed: >-
-          {{
-            users_parsed |
-            map('combine', {
-              'password': item.password | password_hash('sha512')
-            }) | list
-          }}
+        users_hashed: "{{ users_hashed | default([]) + [ item | combine({ 'password': (item.password | password_hash('sha512')) }) ] }}"
       loop: "{{ users_parsed }}"
       loop_control:
         label: "{{ item.username }}"
-
+    
     - name: Ensure users are present
       ansible.builtin.user:
         name: "{{ item.username }}"

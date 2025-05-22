@@ -1,5 +1,5 @@
 - name: Configure web servers
-  hosts: web
+  hosts: linux
   become: yes
   vars:
     site_template: |
@@ -14,7 +14,7 @@
     - name: Create website index.html
       copy:
         content: "{{ site_template }}"
-        dest: "/var/www/html/index.html"
+        dest: "/usr/share/nginx/html/index.html"
 
     - name: Ensure nginx is listening on custom port
       lineinfile:

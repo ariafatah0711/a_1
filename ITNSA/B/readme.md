@@ -121,10 +121,14 @@ ansible -v
 
 ### Test koneksi SSH dengan Ansible
 ```bash
+# linux
 ansible linux -i /home/user/workfolder/hosts -m ping
 
+# windows
+ansible windows -i /home/user/workfolder/hosts -m win_ping
+
 # atau jika ingin menggunakan semua ip di inventory
-ansible all -i /home/user/workfolder/hosts -m ping
+# ansible all -i /home/user/workfolder/hosts -m ping
 ```
 Penjelasan:
 - **linux** → nama group host yang didefinisikan di file hosts.

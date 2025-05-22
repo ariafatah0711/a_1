@@ -16,9 +16,13 @@
         src: "{{ csv_file }}"
       register: csv_content
 
-    - name: Parse CSV content with ';' delimiter
+    - name: Decode CSV and split lines
       set_fact:
-        users_raw: "{{ csv_content['content'] | b64decode | splitlines()[1:] }}"
+        csv_lines: "{{ csv_content['content'] | b64decode | splitlines }}"
+
+    - name: Remove header from CSV lines
+      set_fact:
+        users_raw: "{{ csv_lines[1:] }}"
 
     - name: Convert raw CSV lines into structured dict
       set_fact:

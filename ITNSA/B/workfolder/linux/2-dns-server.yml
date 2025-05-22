@@ -1,9 +1,12 @@
 - name: Setup DNS Server
-  hosts: dns
+  hosts: linux
   become: yes
   vars:
     zone_name: linux.com
     zone_file: db.linux.com
+    web_servers:
+      - "10.0.10.11"  # lin1
+      - "10.0.10.12"  # lin2
     forwarders:
       - 8.8.8.8
       - 1.1.1.1
@@ -44,8 +47,8 @@
           @       IN  NS      ns.{{ zone_name }}.
           ns      IN  A       10.0.10.11
           {{ zone_name }}. IN A 10.0.10.11
-          lin1    IN  A       10.1.10.247
-          lin2    IN  A       10.1.10.245
+          lin1    IN  A       {{ web_servers[0] }}
+          lin2    IN  A       {{ web_servers[1] }}
 
     - name: Enable and restart bind9
       service:

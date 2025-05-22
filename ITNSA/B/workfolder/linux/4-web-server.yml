@@ -1,9 +1,10 @@
 - name: Configure web servers
-  hosts: linux
+  hosts: web
   become: yes
+  gather_facts: yes  # penting agar ansible_hostname tersedia
   vars:
     site_template: |
-      <html><body style='color: {{ webcolor }};'>Hello from {{ hostname }} !</body></html>
+      <html><body style='color: {{ webcolor }};'>Hello from {{ ansible_hostname }} !</body></html>
   tasks:
     - name: Install nginx 
       apt:

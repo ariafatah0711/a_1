@@ -60,6 +60,23 @@ ansible -v
   ```
 
 ## Ansible – Automation via SSH
+### configurasi ansible aria generate by Chat GPT (opsional jika ingin cuma run aja)
+- clone repository ini dan masuk ke ITNSA, modul B
+  ```bash
+  cd /tmp
+  git clone https://github.com/ariafatah/a_1
+  cd a_1
+
+  cp -rf ITNSA/B/workfolder /home/user
+  ```
+- jika user / directory /home/user tidak ditemukan buat terlebih dahulu dengan menggunakan ```useradd user```, dan ```passwd user``` untuk mengubah password user (opsional)
+- setelah melakukan clone masuk ke directory dengan perintah ```/home/user/workfolder```, dan jangan lupa ubah hosts menjadi ip yang sesuai dengan server yang ingin di konfig nantinya
+  ```bash
+  cd /home/user/workfolder
+  nano hosts
+  ## dan sesuaikan
+  ```
+
 ### Test koneksi SSH dengan Ansible
 ```bash
 ansible all -i /home/user/workfolder/hosts -m ping
@@ -71,11 +88,20 @@ Penjelasan:
 
 ### Menjalankan Playbook Ansible
 ```bash
+# LIN*
 ansible-playbook /home/user/workfolder/linux/1-hostname.yml -i /home/user/workfolder/hosts
 ansible-playbook /home/user/workfolder/linux/2-dns-server.yml -i /home/user/workfolder/hosts
 ansible-playbook /home/user/workfolder/linux/3-dns-client.yml -i /home/user/workfolder/hosts
 ansible-playbook /home/user/workfolder/linux/4-web-server.yml -i /home/user/workfolder/hosts
 ansible-playbook /home/user/workfolder/linux/5-users.yml -i /home/user/workfolder/hosts
+
+# WIN
+ansible-playbook /home/user/workfolder/windows/1-hostname.yml -i /home/user/workfolder/hosts
+ansible-playbook /home/user/workfolder/windows/2-sec-log.yml -i /home/user/workfolder/hosts
+ansible-playbook /home/user/workfolder/windows/3-dns-client.yml -i /home/user/workfolder/hosts
+ansible-playbook /home/user/workfolder/windows/3-dns-server.yml -i /home/user/workfolder/hosts
+ansible-playbook /home/user/workfolder/windows/4-web-server.yml -i /home/user/workfolder/hosts
+
 ```
 > Pastikan struktur direktori dan nama file sesuai.
 

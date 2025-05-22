@@ -1,0 +1,56 @@
+- name: Configure DNS Server
+  hosts: lin
+  become: true
+  vars:
+    domain_name: "linux.com"
+    domain_ip: lin1
+    zone_file_path: "/etc/bind/zones/db.linux.com"
+  tasks:
+  - name: Install Bind9 DNS server
+    apt:
+      name: bind9
+  - name: Ensure zone directory exists
+    file:
+      path: /etc/bind/zones
+      state: directory
+      owner: root
+      group: bind
+      mode: '0755'
+  - name: Configure named.conf.local to include linux.com zone
+    blockinfile:
+      path: /etc/bind/named.conf.local
+      block: |
+        zone "{{ domain_name }}" {
+            type master;
+            file "{{ zone_file_path }}";
+        };
+      marker: "# {mark} ANSIBLE MANAGED ZONE CONFIG"
+
+  - name: Create zone file for linux.com
+    copy:
+      dest: "{{ zone_file_path }}"
+      content: |
+        $TTL    604800
+        @       IN      SOA     ns1.{{ domain_name }}. admin.{{ domain_name }}. (
+                              2         ; Serial
+                          604800         ; Refresh
+                            86400         ; Retry
+                          2419200         ; Expire
+                          604800 )       ; Negative Cache TTL
+        ;
+        @       IN      NS      ns1.{{ domain_name }}.
+        ns1     IN      A       {{ domain_ip }}
+        @       IN      A       {{ domain_ip }}
+
+  - name: Add A records for each host in group lin
+    lineinfile:
+      path: "{{ zone_file_path }}"
+      line: "{{ item }}     IN      A       {{ hostvars[item].ansible_default_ipv4.address }}"
+      create: yes
+    loop: "{{ groups['lin'] }}"
+    when: hostvars[item].ansible_default_ipv4 is defined
+
+  - name: Restart Bind9
+    service:
+      name: bind9
+      state: restarted

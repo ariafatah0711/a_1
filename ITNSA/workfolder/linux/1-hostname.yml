@@ -1,0 +1,10 @@
+- name: Test connection and check hostname
+  hosts: lin
+  become: true
+  gather_facts: true
+  tasks:
+  # - name: Change The hostname
+  #   hostname:
+  #      name: "{{ inventory_hostname  }}"
+  - name: check hostname
+    command: hostname

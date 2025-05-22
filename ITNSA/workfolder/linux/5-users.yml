@@ -1,1 +1,45 @@
-#
+- name: Import users from CSV
+  hosts: linux
+  become: yes
+  vars:
+    csv_file: /home/user/workfolder/users.csv
+
+  tasks:
+    - name: Read user CSV file
+      slurp:
+        src: "{{ csv_file }}"
+      register: csv_content
+
+    - name: Parse CSV content with ';' delimiter
+      set_fact:
+        users_parsed: >-
+          {{
+            csv_content['content'] | b64decode | splitlines()[1:] |
+            map('split', ';') |
+            map('zip', ['uid', 'username', 'password', 'home']) |
+            map('community.general.dict') | list
+          }}
+
+    - name: Generate password hashes
+      set_fact:
+        users_hashed: >-
+          {{
+            users_parsed |
+            map('combine', {
+              'password': item.password | password_hash('sha512')
+            }) | list
+          }}
+      loop: "{{ users_parsed }}"
+      loop_control:
+        label: "{{ item.username }}"
+
+    - name: Ensure users are present
+      ansible.builtin.user:
+        name: "{{ item.username }}"
+        uid: "{{ item.uid | int }}"
+        password: "{{ item.password }}"
+        home: "{{ item.home }}"
+        state: present
+        update_password: on_create
+        create_home: yes
+      loop: "{{ users_hashed }}"

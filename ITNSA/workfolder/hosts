@@ -1,10 +1,10 @@
 [linux]
-10.1.10.11 hostname=lin1 webport=80 webcolor=blue
-10.1.10.12 hostname=lin2 webport=80 webcolor=green
+10.1.10.247 hostname=lin1 webport=80 webcolor=blue
+10.1.10.245 hostname=lin2 webport=80 webcolor=green
 
 [web]
-10.1.10.11
-10.1.10.12
+10.1.10.247 hostname=lin1 webport=80 webcolor=blue
+10.1.10.245 hostname=lin2 webport=80 webcolor=green
 
 [dns]
 10.1.10.20

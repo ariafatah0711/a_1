@@ -5,25 +5,26 @@
     hostname: "win"             # Nama host DNS (hostname server)
   tasks:
     - name: Ensure DNS feature is installed
-      community.windows.win_feature:
+      ansible.windows.win_feature:
         name: DNS
         state: present
         include_management_tools: true
 
     - name: Ensure DNS service is running
-      community.windows.win_service:
+      ansible.windows.win_service:
         name: DNS
         state: started
         start_mode: auto
 
     - name: Ensure primary DNS zone exists
-      community.windows.win_dns_zone:
+      ansible.windows.win_dns_zone:
         name: windows.com
         type: primary
+        replication: none
         state: present
 
     - name: Add A record for @
-      community.windows.win_dns_record:
+      ansible.windows.win_dns_record:
         name: "@"
         type: A
         value: "{{ ip_dns }}"
@@ -31,7 +32,7 @@
         state: present
 
     - name: Add A record for hostname
-      community.windows.win_dns_record:
+      ansible.windows.win_dns_record:
         name: "{{ hostname }}"
         type: A
         value: "{{ ip_dns }}"
@@ -39,7 +40,7 @@
         state: present
 
     - name: Add A record for www
-      community.windows.win_dns_record:
+      ansible.windows.win_dns_record:
         name: "www"
         type: A
         value: "{{ ip_dns }}"

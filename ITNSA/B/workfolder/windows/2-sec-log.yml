@@ -2,7 +2,23 @@
   hosts: windows
   tasks:
     - name: Stop Remote Desktop Service
-      win_service:
+      ansible.windows.win_service:
         name: TermService
         state: stopped
         start_mode: disabled
+
+    - name: Disable RDP via registry (fungsionalitas RDP dimatikan)
+      ansible.windows.win_regedit:
+        path: HKLM:\System\CurrentControlSet\Control\Terminal Server
+        name: fDenyTSConnections
+        data: 1
+        type: dword
+
+# - name: Disable Remote Desktop
+#   hosts: windows
+#   tasks:
+#     - name: Stop Remote Desktop Service
+#       win_service:
+#         name: TermService
+#         state: stopped
+#         start_mode: disabled

@@ -199,5 +199,23 @@ ls /home
 # 1-hostname.yml
 hostname # sebelum mengecek ini coba reboot dulu karena hostname akan berubah setelah reboot
 
-# 3-web-server.yml
+# 2-sec-log.yml
+Get-Service TermService
+Get-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' -Name fDenyTSConnections
+
+# 3-dns-server.yml & 3-dns-client.yml 
+ipconfig /all
+###
+DNS Servers . . . . . . . . . . . : 10.0.10.20
+                                    10.0.10.11
+###
+nslookup windows.com
+nslookup www.windows.com
+
+# 4-web-server.yml
+Get-Service W3SVC # check active web server service IIS
+Invoke-WebRequest -Uri http://10.1.10.241 -UseBasicParsing # atau gunakan curl tapi di windows cadang curlnya ada errornya
+
+## cek dari ansible atau host lain jika ingin menggunakan curl
+curl windows.com # atau gunakan ip 10.1.10.20
 ```

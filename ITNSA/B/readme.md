@@ -105,6 +105,8 @@ ansible -v
 - clone repository ini dan masuk ke ITNSA, modul B
   ```bash
   cd /tmp
+
+  apt install git
   git clone https://github.com/ariafatah/a_1
   cd a_1
 

@@ -1,5 +1,8 @@
 - name: Install IIS Web Server and set default page
   hosts: windows
+  vars:
+    site_template: |
+        <html><body style='color: {{ webcolor }};'>Hello from {{ hostname }} !</body></html>
   tasks:
     - name: Install IIS Feature
       win_feature:
@@ -9,5 +12,5 @@
 
     - name: Set homepage for www.windows.com
       win_shell: |
-        $html = "Hello from {{ hostname }} !"
+        $html = "{{ site_template }}"
         Set-Content -Path "C:\inetpub\wwwroot\index.html" -Value $html -Force

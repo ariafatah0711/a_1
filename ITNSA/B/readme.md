@@ -85,10 +85,10 @@ ansible -v
   # (Opsional) Cek status service
   Get-Service sshd
   ```
-- Tambahkan rule firewall agar bisa akses dari luar **(opsional)**
+- Tambahkan rule firewall agar bisa akses dari luar
   ```bash
   # versi singkat
-  New-NetFirewallRule -Name sshd -Protocol TCP -LocalPort 22 -Action Allow
+  New-NetFirewallRule -Name sshd -Protocol TCP -LocalPort 22 -Action Allow -DisplayName ssh
   ```
 - mengubah shell default menjadi powershell
   ```bash

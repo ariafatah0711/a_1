@@ -30,13 +30,13 @@ ansible -v
 ### setup openssh server pada LIN1, dan LIN2
 - Instalasi OpenSSH Server di LIN1 dan LIN2
   ```bash
-  sudo apt install openssh-server net-tools
+  apt install openssh-server net-tools
   ```
   > net-tools bersifat opsional, tapi berguna untuk mengecek port SSH (port 22) aktif dengan netstat -tulnp.
 - Edit Konfigurasi sshd_config
   - Edit file konfigurasi OpenSSH:
     ```bash
-    sudo nano /etc/ssh/sshd_config
+    nano /etc/ssh/sshd_config
     ```
   - Cari baris:
     ```bash
@@ -50,12 +50,12 @@ ansible -v
     > Mengubah ke PermitRootLogin yes memperbolehkan login sebagai root via password (pastikan root punya password).
 <!-- - mengaktifkan OpenSSH Server
   ```bash
-  sudo systemctl enable --now ssh
+  systemctl enable --now ssh
   ```
   > --now digunakan untuk melakukan enable sekaligus start -->
 - melakukan restart OpenSSH Server jika ingin mengubah konfigurasi
   ```bash
-  sudo systemctl restart ssh
+  systemctl restart ssh
   ```
 
 ### setup openssh server pada WIN
@@ -108,7 +108,7 @@ ansible -v
   cd /tmp
 
   apt install git
-  git clone https://github.com/ariafatah/a_1
+  git clone https://github.com/ariafatah0711/a_1
   cd a_1
 
   cp -rf ITNSA/B/workfolder /home/user

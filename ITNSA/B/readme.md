@@ -11,14 +11,14 @@
 ### setup repository di LIN1, LIN2, dan BASTION
 - sebelum configurasi repo, pastikan sudah bisa mengakses internet.
 - ubah configuration repo debian 
-  ```nano /etc/apt/sources.lists```
+  ```nano /etc/apt/sources.list```
   ```bash
   deb https://ftp.debian.org/debian/ bookworm contrib main non-free non-free-firmware
   deb https://ftp.debian.org/debian/ bookworm-updates contrib main non-free non-free-firmware
   deb https://security.debian.org/debian-security/ bookworm-security contrib main non-free non-free-firmware
   ```
   > configurasi debian ini tergantung dengan versi yang digunakan, dan url repo juga tergantung repo yang aktif. (bisa cari di google)
-- setelah melakukan configursi tersebut pastikan bisa melakukan apt update
+- setelah melakukan configursi tersebut pastikan bisa melakukan ```apt update```
 
 ### installasi ansible dan package pendukung di BASTION
 ```bash

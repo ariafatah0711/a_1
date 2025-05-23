@@ -68,6 +68,7 @@ ansible -v
 
   # test login
   runas /user:user powershell
+  exit
   ```
 - Instalasi OpenSSH Server
   ```bash
@@ -79,12 +80,12 @@ ansible -v
 
   # Mulai dan aktifkan service agar otomatis jalan saat boot
   Start-Service sshd
-  Set-Service -Name sshd -StartupType 'Automatic'
+  Set-Service -Name sshd -StartupType 'Automatic' # opsional
 
   # (Opsional) Cek status service
   Get-Service sshd
   ```
-- Tambahkan rule firewall agar bisa akses dari luar
+- Tambahkan rule firewall agar bisa akses dari luar **(opsional)**
   ```bash
   # versi singkat
   New-NetFirewallRule -Name sshd -Protocol TCP -LocalPort 22 -Action Allow
@@ -130,6 +131,18 @@ ansible -v
   dns_servers:
     - "10.0.10.11"
     - "10.0.10.12"
+
+  nano windows/3-dns-server.yml
+  ## ubah dan sesuaikan
+  vars:
+    ip_dns: "10.0.10.20"        # IP DNS server (yang akan direkam di A record)
+    hostname: "win"             # Nama host DNS (hostname server)
+
+  nano windows/3-dns-client.yml
+  ## ubah dan sesuaikan
+  dns_servers:
+      - "10.0.10.20"
+      - "10.0.10.11"
   ```
 
 ### Test koneksi SSH dengan Ansible
@@ -205,17 +218,18 @@ Get-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' 
 
 # 3-dns-server.yml & 3-dns-client.yml 
 ipconfig /all
-###
+### pastikan ip dns nya sesuai dengann ip dns WIN, dan LIN1
 DNS Servers . . . . . . . . . . . : 10.0.10.20
                                     10.0.10.11
 ###
 nslookup windows.com
 nslookup www.windows.com
+nslookup win.windows.com
 
 # 4-web-server.yml
 Get-Service W3SVC # check active web server service IIS
-Invoke-WebRequest -Uri http://10.1.10.241 -UseBasicParsing # atau gunakan curl tapi di windows cadang curlnya ada errornya
+Invoke-WebRequest -Uri http://10.0.10.20 -UseBasicParsing # atau gunakan curl tapi di windows cadang curlnya ada errornya
 
 ## cek dari ansible atau host lain jika ingin menggunakan curl
-curl windows.com # atau gunakan ip 10.1.10.20
+curl 10.0.10.20 # sesuaikan saja ip nya sama ip windowsnya
 ```

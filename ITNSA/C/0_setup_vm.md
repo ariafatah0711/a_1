@@ -49,12 +49,107 @@
   ```
 
 ## setup LINSRV1
-![alt text](images/0_setup_vm/image-5.png)
-```nano /etc/network/interfaces``` \
-tambahkan bagian ini
-```bash
-iface ens33 inet static
-      address 192.168.10.11
-      netmask 255.255.255.0
-      gateway 192.168.10.1
-```
+![alt text](images/0_setup_vm/image-5.png) \
+- ubah hostname menggunakan hostnamectl atau ubah di /etc/hostname
+  ```bash
+  hostnamectl set-hostname LINSRV1
+
+  # atau ubah di /etc/hostname
+  echo LINSRV1 > /etc/hostname
+
+  ## reload
+  bash
+  ```
+- tambahkan ip address di /etc/network/interfaces
+  ```nano /etc/network/interfaces``` \
+  tambahkan bagian ini
+  ```bash
+  iface ens33 inet static
+        address 192.168.10.11
+        netmask 255.255.255.0
+        gateway 192.168.10.1
+  ```
+- tambahkan dns nameserver di /etc/resolv.conf
+  ```nano /etc/resolv.conf``` \
+  ubah menjadi seperti ini \
+  ```bash
+  domain utara.site
+  search utara.site
+  nameserver 192.168.10.1
+  nameserver 8.8.8.8
+  ```
+- lakukan restart service networking
+  ```bash
+  systemctl restart networking
+  ```
+
+## setup LINSRV2
+- ubah hostname menggunakan hostnamectl atau ubah di /etc/hostname seperti LINSRV1
+  ```hostnamectl set-hostname LINSRV2```
+- untuk ip karena dhcp static dan secara default interface ens33 sudah dhcp jadi tidak perlu
+- tambahkan dns nameserver di /etc/resolv.conf seperti LINSRV1
+  ```nano /etc/resolv.conf``` \
+  ubah menjadi seperti ini \
+  ```bash
+  domain utara.site
+  search utara.site
+  nameserver 192.168.10.1
+  nameserver 8.8.8.8
+  ```
+- lakukan restart service networking
+  ```bash
+  systemctl restart networking
+  ```
+
+## setup LINCLI
+- ubah hostname menggunakan hostnamectl atau ubah di /etc/hostname seperti LINSRV1
+  ```hostnamectl set-hostname LINCLI```
+- untuk ip karena dhcp static dan secara default interface ens33 sudah dhcp jadi tidak perlu
+- tambahkan dns nameserver di /etc/resolv.conf seperti LINSRV1
+  ```nano /etc/resolv.conf``` \
+  ubah menjadi seperti ini \
+  ```bash
+  domain utara.site
+  search utara.site
+  nameserver 192.168.10.1
+  nameserver 8.8.8.8
+  ```
+- lakukan restart service networking
+  ```bash
+  systemctl restart networking
+  ```
+
+## setup FW-UTARA
+![alt text](images/0_setup_vm/image-6.png)
+- ubah hostname menggunakan hostnamectl atau ubah di /etc/hostname seperti LINSRV1
+  ```hostnamectl set-hostname FW-UTARA```
+- tambahkan ip address di /etc/network/interfaces di interface ens37 karena ens33 dipake untuk ke bridge / menghubugnkan ke FW-SELATAN
+  ```nano /etc/network/interfaces``` \
+  tambahkan bagian ini
+  ```bash
+  auto ens37
+  iface ens37 inet static
+        address 192.168.10.1
+        netmask 255.255.255.0
+  ```
+- lakukan restart service networking
+  ```bash
+  systemctl restart networking
+  ```
+
+## setup FW-SELATAN
+- ubah hostname menggunakan hostnamectl atau ubah di /etc/hostname seperti LINSRV1
+  ```hostnamectl set-hostname FW-SELATAN```
+- tambahkan ip address di /etc/network/interfaces di interface ens37 karena ens33 dipake untuk ke bridge / menghubugnkan ke FW-UTARA
+  ```nano /etc/network/interfaces``` \
+  tambahkan bagian ini
+  ```bash
+  auto ens37
+  iface ens37 inet static
+        address 172.16.20.1
+        netmask 255.255.255.0
+  ```
+- lakukan restart service networking
+  ```bash
+  systemctl restart networking
+  ```

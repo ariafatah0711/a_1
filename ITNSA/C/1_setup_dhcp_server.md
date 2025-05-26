@@ -97,12 +97,12 @@
   nano /etc/dhcp/dhcpd.conf
   ```
 
-  Cari baris ini:
+  Cari baris ini: \
   ![alt text](images/1_setup_dhcp_server/image-1.png)
-  Uncomment semuanya dan ubah sesuai dengan network yang digunakan:
+  Uncomment semuanya dan ubah sesuai dengan network yang digunakan: \
   ![alt text](images/1_setup_dhcp_server/image-2.png)
 
-* Tambahkan DHCP static
+* Tambahkan DHCP static \
   ![alt text](images/1_setup_dhcp_server/image-6.png)
 
   ```bash
@@ -130,9 +130,10 @@
   nano /etc/sysctl.conf
   ```
 
-  Cari baris ini:
+  Cari baris ini: \
   ![alt text](images/1_setup_dhcp_server/image-4.png)
-  Dan uncomment menjadi seperti ini:
+
+  Dan uncomment menjadi seperti ini: \
   ![alt text](images/1_setup_dhcp_server/image-5.png)
 
 * Restart sysctl:

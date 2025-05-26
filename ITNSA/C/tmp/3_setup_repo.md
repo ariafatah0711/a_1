@@ -10,6 +10,9 @@
 ```bash
 sudo mkdir /media/debian
 sudo mount -o loop /path/to/debian-dvd.iso /media/debian
+
+# atau
+sudo mount /dev/<sr0> /media/debian
 ```
 
 > Ganti `/path/to/debian-dvd.iso` dengan lokasi file ISO milikmu.
@@ -60,6 +63,9 @@ Jika memiliki lebih dari satu DVD ISO:
 ```bash
 sudo mkdir /media/debian2
 sudo mount -o loop /path/to/debian-dvd2.iso /media/debian2
+
+# atau
+sudo mount /dev/<sr0> /media/debian
 ```
 
 * Tambahkan ke `sources.list`:

@@ -34,27 +34,10 @@
     - network adaptor 1 = LAN_SEGMENT ( selatan.site (172.16.20.0/24) )
 - setelah setup network adaptor jangan lupa untuk melakukan snapshoot agar mempermudah jika ingin mencoba lagi
 
-## setup hostname, repository
-- power on LINCLI, LINSRV1, LINSRV1, FW-UTARA, FW-SELATAN terlebih dahulu
-- setelah itu coba ping internet dengan VM FW jika sudah berarti sudah aman
+## setup hostname
+- power on LINSRV1, LINSRV1, FW-UTARA, FW-SELATAN terlebih dahulu
+- setelah itu coba ping FW ping internet jika sudah berarti sudah aman
 - ubah hostname di tiap vm
   ```bash
   hostnamectl set-hostname <nama>
   ```
-- setup repository di repository.list
-  ```bash
-  sudo mkdir /media/debian2
-  mount /dev/sr0 /media/debian2
-  sudo apt-cdrom add
-  ```
-
-## setup LINSRV1
-![alt text](images/0_setup_vm/image-5.png)
-```nano /etc/network/interfaces``` \
-tambahkan bagian ini
-```bash
-iface ens33 inet static
-      address 192.168.10.11
-      netmask 255.255.255.0
-      gateway 192.168.10.1
-```

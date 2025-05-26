@@ -40,21 +40,35 @@
   ![alt text](images/1_setup_dhcp_server/image-1.png)
   uncommant semuanya dan ubah sesuai dengan network yang kita gunakan
   ![alt text](images/1_setup_dhcp_server/image-2.png)
+- tambahkan dhcp static
+  ```bash
+  host client-pc {
+    hardware ethernet 08:00:27:4a:2f:45;  # MAC address client
+    fixed-address 192.168.1.100;          # IP yang akan diberikan
+  }
+  ```
+- lakukan restart dengan perintah ```systemctl restart networking```
 
 ### LINSRV1
 ```bash
 ```
 
 ## LINCLI
-### setelah itu tinggal coba lakukan restart networking, atau dhclient agar client LINSRV1, dan LINSRV2 dapat ip
-```bash
-systemctl restart networking
-```
-![alt text](images/1_setup_dhcp_server/image-3.png)
-atau gunakan ini, hanya saja nanti akan dpt 2 ip (opsional)
-```bash
-dhclient
-```
+- setelah itu tinggal coba lakukan restart networking, atau dhclient agar client LINSRV1, dan LINSRV2 dapat ip
+  ```bash
+  systemctl restart networking
+  ```
+  ![alt text](images/1_setup_dhcp_server/image-3.png) \
+  atau gunakan ini, hanya saja nanti akan dpt 2 ip (opsional) \
+  ```bash
+  dhclient
+  ```
+
+## LINSRV1
+- ubah ip static
+
+## LINSRV2
+- ubah ip dhcp
 
 ## FW-SELATAN
 ### ubah ip address di interface subnet lan

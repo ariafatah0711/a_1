@@ -1,4 +1,4 @@
-# setup
+<!-- # setup
 ## install require app
 - [debian_12_netinst.iso](#)
 - [windows_server_2022_evaluation](https://www.microsoft.com/en-us/evalcenter/download-windows-server-2022)
@@ -152,4 +152,179 @@
 - lakukan restart service networking
   ```bash
   systemctl restart networking
-  ```
+  ``` -->
+
+# VM Setup Guide for Network Simulation
+
+## 1. Install Required Applications
+
+* [Debian 12 Netinst ISO](#)
+* [Windows Server 2022 Evaluation](https://www.microsoft.com/en-us/evalcenter/download-windows-server-2022)
+* [VMware Workstation Pro](https://support.broadcom.com/group/ecx/downloads) *(Requires login to download)*
+
+## 2. Create Virtual Machines
+
+### Step-by-Step:
+
+1. **Install VMware Workstation Pro**
+2. **Prepare ISO files:** Debian 12 and Windows Server 2022
+3. **Create a Debian VM:**
+
+   * Install Debian 12 completely until desktop/CLI is accessible
+   * Shutdown the VM
+4. **Clone the Debian VM** into 4 instances and rename them as shown:
+   ![VM Names](images/0_setup_vm/image-1.png)
+5. **Install Windows Server VM**
+
+   * Go to `Options > Advanced > Firmware Type`
+   * Set it to **BIOS**
+     ![Windows Server Setup](images/0_setup_vm/image-2.png)
+
+## 3. Setup Network Adapter
+
+### Virtual Network Editor:
+
+* Create a **bridge** using wireless or LAN adapter
+  ![Virtual Network Editor](images/0_setup_vm/image.png)
+
+### Configure Network per VM:
+
+* **FW-UTARA**
+
+  * Adapter 1: Bridge *(configured in Virtual Network Editor)*
+    ![FW-UTARA Bridge](images/0_setup_vm/image-4.png)
+  * Adapter 2: LAN Segment `utara.site (192.168.10.0/24)`
+    ![FW-UTARA LAN Segment](images/0_setup_vm/image-3.png)
+
+* **LINSRV1 & LINSRV2**
+
+  * Adapter 1: LAN Segment `utara.site (192.168.10.0/24)`
+
+* **FW-SELATAN**
+
+  * Adapter 1: Bridge
+  * Adapter 2: LAN Segment `selatan.site (172.16.20.0/24)`
+
+* **WINSRV**
+
+  * Adapter 1: LAN Segment `selatan.site (172.16.20.0/24)`
+
+> Take a **snapshot** after network configuration to simplify retries or troubleshooting
+
+## 4. Setup Hostnames and Repository
+
+### Power on the following VMs:
+
+`LINCLI, LINSRV1, LINSRV2, FW-UTARA, FW-SELATAN`
+
+### Ping Internet from FW VM to confirm connectivity
+
+### Set Hostnames:
+
+```bash
+hostnamectl set-hostname <NAMA_HOST>
+```
+
+### Setup Debian Repository:
+
+```bash
+sudo mkdir /media/debian2
+mount /dev/sr0 /media/debian2
+sudo apt-cdrom add
+```
+
+---
+
+## 5. Configure Each VM
+
+### LINSRV1
+
+![LINSRV1 Config](images/0_setup_vm/image-5.png)
+
+```bash
+hostnamectl set-hostname LINSRV1
+
+# OR manually:
+echo LINSRV1 > /etc/hostname
+bash
+```
+
+#### Network Configuration (/etc/network/interfaces):
+
+```bash
+iface ens33 inet static
+  address 192.168.10.11
+  netmask 255.255.255.0
+  gateway 192.168.10.1
+```
+
+#### DNS (/etc/resolv.conf):
+
+```bash
+domain utara.site
+search utara.site
+nameserver 192.168.10.1
+nameserver 8.8.8.8
+```
+
+#### Restart Networking:
+
+```bash
+systemctl restart networking
+```
+
+### LINSRV2
+
+```bash
+hostnamectl set-hostname LINSRV2
+```
+
+* No IP config needed (uses DHCP)
+* Add DNS as above
+* Restart networking
+
+### LINCLI
+
+```bash
+hostnamectl set-hostname LINCLI
+```
+
+* No IP config needed (uses DHCP)
+* Add DNS as above
+* Restart networking
+
+### FW-UTARA
+
+![FW-UTARA Config](images/0_setup_vm/image-6.png)
+
+```bash
+hostnamectl set-hostname FW-UTARA
+```
+
+#### Add IP to ens37 (/etc/network/interfaces):
+
+```bash
+auto ens37
+iface ens37 inet static
+  address 192.168.10.1
+  netmask 255.255.255.0
+```
+
+* Restart networking
+
+### FW-SELATAN
+
+```bash
+hostnamectl set-hostname FW-SELATAN
+```
+
+#### Add IP to ens37 (/etc/network/interfaces):
+
+```bash
+auto ens37
+iface ens37 inet static
+  address 172.16.20.1
+  netmask 255.255.255.0
+```
+
+* Restart networking

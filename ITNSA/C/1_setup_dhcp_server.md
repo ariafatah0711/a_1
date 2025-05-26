@@ -28,15 +28,15 @@
   ```bash
   apt install isc-dhcp-server
   ```
-- setup interface dhcp server
-  ```nano /etc/default/isc-dhcp-serve```
-  ubah bagian ini
+- setup interface dhcp server \
+  ```nano /etc/default/isc-dhcp-serve``` \
+  ubah bagian ini \
   ```bash
   INTERFACESv4="<ens37>"
   ```
-- configurasikan dhcp server
-  ```nano /etc/dhcp/dhcpd.conf```
-  cari baris ini
+- configurasikan dhcp server \
+  ```nano /etc/dhcp/dhcpd.conf``` \
+  cari baris ini \
   ![alt text](images/1_setup_dhcp_server/image-1.png)
   uncommant semuanya dan ubah sesuai dengan network yang kita gunakan
   ![alt text](images/1_setup_dhcp_server/image-2.png)

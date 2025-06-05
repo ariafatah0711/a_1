@@ -304,6 +304,6 @@ NAT-GATEWAY2(config-subif)#standby 2 ip 10.200.200.254
 ```
 
 #### Verifikasi
-The HSRP is active, and Admin-PC can ping the gateway
+The HSRP is active, and Admin-PC can ping the gateway \
 ![alt text](images/README/image-3.png) \
 ![alt text](images/README/image-2.png)

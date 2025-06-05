@@ -58,8 +58,8 @@ SW-VOICE(config-if-range)#no sw acc vlan 100
 ```
 
 #### Verifikasi
-The VOICE network is now working properly, and all IP Phones can call each other.
-```#do sh run | sec ephone | include mac```
+The VOICE network is now working properly, and all IP Phones can call each other. \
+```#do sh run | sec ephone | include mac``` \
 ![alt text](images/README/image.png)
 
 ### Problem 2
@@ -94,11 +94,11 @@ switchport port-security maximum 1
 ```
 
 #### Verifikasi
-The Admin-PC can only access the VOICE-NETWORKS network, and the MAC-Address
+The Admin-PC can only access the VOICE-NETWORKS network, and the MAC-Address \
 ![alt text](images/README/image-1.png)
 
 ### Problem 3
-Warrior of the Net Tidak Bisa Mengakses Public-FTP. (Jawa > Wariior of the Net & Sulawesi > DATA-NETWORKS)
+Warrior of the Net Tidak Bisa Mengakses Public-FTP. (Jawa > Wariior of the Net & Sulawesi > DATA-NETWORKS) \
 
 #### Warrior-of-the-Net > Console the CORERTR-PUSTIKOM
 ```bash
@@ -106,12 +106,12 @@ CORERTR-PUSTIKOM(config)#ip route 0.0.0.0 0.0.0.0 201.202.203.15
 ```
 
 #### Public-FTP > Service
-- enable the ftp service, and add the user ftpinacomp:P@ssw0rd with perm RWDNL (full)
+- enable the ftp service, and add the user ftpinacomp:P@ssw0rd with perm RWDNL (full) \
   ![alt text](images/README/image-4.png)
 
 #### Warrior-of-the-Net > IP-Address
-- change the IP-Address to 201.202.203.20/25 with gateway 201.202.203.10
-  ![alt text](images/README/image-6.png)
+- change the IP-Address to 201.202.203.20/25 with gateway 201.202.203.10 \
+  ![alt text](images/README/image-6.png) \
   ![alt text](images/README/image-5.png)
 
 #### Laptop 3 > Console the FTP-FW1
@@ -136,12 +136,11 @@ route outside 0.0.0.0 0.0.0.0 201.202.203.10 1
 access-list FTP-SERVICE extended permit tcp 201.202.203.0 255.255.255.128 host 10.192.168.11 eq ftp
 ```
 kita perlu menambahkan access-group
-
 ```bash
 FW1(config)#access-group FTP-SERVICE in interface outside
 ```
 
-- setelah saya nmelihat configurasi firewall saya menyimpulkan bahwa public ftp dia di nat jadi kita bisa akses ftp server dengan ip public fw nya
+- setelah saya nmelihat configurasi firewall saya menyimpulkan bahwa public ftp dia di nat jadi kita bisa akses ftp server dengan ip public fw nya \
   ![alt text](images/README/image-7.png)
 
 ### Problem 4
@@ -227,8 +226,8 @@ APP2-RTR(config-ext-nacl)# permit ip 192.168.200.0 0.0.0.255 192.168.1.0 0.0.0.2
 ```
 
 ### Verifikasi
-masing masing Routuer APP berhasil terenkripsi
-![alt text](images/README/image-8.png)
+masing masing Routuer APP berhasil terenkripsi \
+![alt text](images/README/image-8.png) \
 ![alt text](images/README/image-9.png)
 
 ### Problem 5
@@ -250,7 +249,7 @@ memperbaiki tarnsport input
 CORERTR-PUSTIKOM(config)#line vty 0 4
 CORERTR-PUSTIKOM(config-line)#transport input ssh
 ```
-lalu saya coba mengecek radius server dan melihat configurasinya ternyata terdapat kesalahan pada port, dan user setup nya belum ditambahkan
+lalu saya coba mengecek radius server dan melihat configurasinya ternyata terdapat kesalahan pada port, dan user setup nya belum ditambahkan \
 ![alt text](images/README/image-10.png)
 
 #### Verifikasi
@@ -259,9 +258,9 @@ lalu saya coba mengecek radius server dan melihat configurasinya ternyata terdap
 ### Problem 6
 MAIL Server Tidak Berfungsi Pasca Migrasi Sistem (APP1-Networks)
 #### DNS Server > DNS
-- aktifkan DNS Server, dan tambahkan A Record DNS mengarah ke email server
+- aktifkan DNS Server, dan tambahkan A Record DNS mengarah ke email server \
   ![alt text](images/README/image-21.png)
-- dan pastikan berhasil melakukan nslookup
+- dan pastikan berhasil melakukan nslookup \
   ![alt text](images/README/image-20.png)
 
 #### PC 0, dan PC 1
@@ -306,5 +305,5 @@ NAT-GATEWAY2(config-subif)#standby 2 ip 10.200.200.254
 
 #### Verifikasi
 The HSRP is active, and Admin-PC can ping the gateway
-![alt text](images/README/image-3.png)
+![alt text](images/README/image-3.png) \
 ![alt text](images/README/image-2.png)

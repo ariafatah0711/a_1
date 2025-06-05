@@ -1,0 +1,26 @@
+---
+- name: Import users from CSV
+  hosts: linux
+  become: yes
+  vars:
+    csv_file: /home/user/workfolder/users.csv
+
+  tasks:
+    - name: Read CSV file from control node
+      community.general.read_csv:
+        path: "{{ csv_file }}"
+        delimiter: ';'
+      register: user_list
+      delegate_to: localhost
+
+    - name: Ensure users exist
+      user:
+        name: "{{ item.username }}"
+        uid: "{{ item.uid | int }}"
+        password: "{{ item.password | password_hash('sha512') }}"
+        home: "{{ item.home }}"
+        shell: /bin/bash
+        state: present
+        create_home: yes
+        update_password: on_create
+      loop: "{{ user_list.list }}"

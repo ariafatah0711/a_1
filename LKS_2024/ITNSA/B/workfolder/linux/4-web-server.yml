@@ -1,0 +1,31 @@
+- name: Configure web servers
+  hosts: web
+  become: yes
+  gather_facts: yes  # penting agar ansible_hostname tersedia
+  vars:
+    site_template: |
+      <html><body style='color: {{ webcolor }};'>Hello from {{ ansible_hostname }} !</body></html>
+  tasks:
+    - name: Install nginx 
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+
+    - name: Create website index.html
+      copy:
+        content: "{{ site_template }}"
+        dest: "/var/www/html/index.html"
+
+    - name: Ensure nginx is listening on custom port
+      lineinfile:
+        path: /etc/nginx/sites-available/default
+        regexp: '^(\s*)listen\s+\d+'
+        line: "    listen {{ webport }};"
+      notify: Restart nginx
+
+  handlers:
+    - name: Restart nginx
+      service:
+        name: nginx
+        state: restarted

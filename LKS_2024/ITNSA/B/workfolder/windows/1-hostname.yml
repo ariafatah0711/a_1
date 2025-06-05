@@ -1,0 +1,11 @@
+- name: Set hostname
+  hosts: windows
+  tasks:
+    - name: Rename computer
+      win_hostname:
+        name: "{{ hostname }}"
+      register: result
+
+    # - name: Reboot if hostname changed
+    #   win_reboot:
+    #   when: result.reboot_required

@@ -93,7 +93,15 @@ usermod -s /usr/sbin/nologin service1 # akan ada output user is not avaible
 usermod -s /bin/false service1 # outputnya tidak ada kosong / null
 ```
 
-### 2.3 Nonaktifkan Login Root via SSH
+### 2.3 mengunci user atau membuka user tertentu
+```bash
+sudo usermod -L nama_user # lock
+sudo usermod -U nama_user # unclock
+# Ini akan mengunci password user sehingga tidak bisa login.
+# Tapi service yang dijalankan oleh user ini tetap berjalan (jika ada).
+```
+
+### 2.4 Nonaktifkan Login Root via SSH
 ```bash
 nano /etc/ssh/sshd_config
 # Tambahkan atau ubah:
@@ -106,7 +114,7 @@ AllowUsers user1 user2
 systemctl restart ssh
 ```
 
-#### 2.4 Mengaktifkan Public key untuk koneksi aman
+#### 2.5 Mengaktifkan Public key untuk koneksi aman
 ```bash
 ssh-keygen
 ssh-copy-id user1@localhost
@@ -117,7 +125,7 @@ PasswordAuthentication no
 PubkeyAuthentication yes
 ```
 
-#### 2.5 setup MFA untuk user ssh
+#### 2.6 setup MFA untuk user ssh
 ```bash
 apt install libpam-google-authenticator
 
